@@ -1,0 +1,153 @@
+﻿@model IEnumerable<SistemAnalizi2.Models.adre>
+
+@{
+    ViewBag.Title = "Kargo Bilgileri";
+}
+<br /><br />
+<h2>Adres Seçimi</h2>
+<p>
+    @Html.ActionLink("Yeni Adres Ekle", "Create", new { MusteriID = Session["MusteriID"]})
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.adresTipi)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ilceler.ilceAdi)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.adres)
+        </th>
+        <th></th>
+    </tr>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.adresTipi)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ilceler.ilceAdi)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.adres)
+            </td>
+            <td><input type="radio" name="secilenAdres" value="Seç" /></td>
+            <td>
+                @Html.ActionLink("Düzenle", "Edit", new { id = item.adresID }) |
+                @Html.ActionLink("Sil", "Delete", new { id = item.adresID })
+            </td>
+        </tr>
+    }
+}
+
+
+</table>
+<br />
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        height: 500px;
+    }
+</style>
+
+
+
+<div id="map"></div>
+<script>
+    
+    var map;
+    var geocoder;
+
+    function initMap() {
+        var myOptions = {
+            center: { lat: 38.734566, lng: 35.482538 },
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        geocoder = new google.maps.Geocoder();
+        var map = new google.maps.Map(document.getElementById("map"),
+        myOptions);
+        google.maps.event.addListener(map, 'click', function (event) {
+            placeMarker(event.latLng);
+        });
+
+        var marker;
+        function placeMarker(location) {
+            if (marker) { //on vérifie si le marqueur existe
+                marker.setPosition(location); //on change sa position
+            } else {
+                marker = new google.maps.Marker({ //on créé le marqueur
+                    position: location,
+                    map: map
+                });
+            }
+            document.getElementById('lat').value = location.lat();
+            document.getElementById('long').value = location.lng();
+            getAddress(location);
+        }
+
+        function getAddress(latLng) {
+            geocoder.geocode({ 'latLng': latLng },
+              function (results, status) {
+                  if (status == google.maps.GeocoderStatus.OK) {
+                      if (results[0]) {
+                          document.getElementById("adres").value = results[0].formatted_address;
+                      }
+                      else {
+                          document.getElementById("adres").value = "No results";
+                      }
+                  }
+                  else {
+                      document.getElementById("adres").value = status;
+                  }
+              });
+        }
+    }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAq8eagGyl4kFM8GM5bHeFRZt2WCYXUF9A&callback=initMap"
+        async defer></script>
+
+<br />
+
+<div class="form-group">
+    <label class="control-label col-md-2">Latitude</label>
+    <input type="text" class="form-control" id="lat" name="lat" />
+    
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-2">Longtitude</label>
+    <input type="text" class="form-control" id="long" name="long" />
+
+</div>
+
+<div class="form-group">
+    <label class="control-label col-md-2">adres</label>
+    <input type="text" class="form-control" id="adres" name="adres" />
+
+</div>
+
+
+<div class="col-lg-2 col-lg-offset-10">
+
+    @Html.ActionLink("Ödeme YAP", "OdemeYap", "Sepet", null, new { @class = "btn btn-default btn-success" })
+
+
+</div>

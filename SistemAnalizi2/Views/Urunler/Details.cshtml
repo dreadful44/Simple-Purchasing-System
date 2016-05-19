@@ -1,0 +1,58 @@
+﻿@model SistemAnalizi2.Models.urunler
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>urunler</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.urunAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.urunAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fiyati)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fiyati)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.markalar_markaID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.markalar_markaID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.kategori_kategoriID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kategori_kategoriID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.stokBilgisi_stokID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stokBilgisi_stokID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.urunlerID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

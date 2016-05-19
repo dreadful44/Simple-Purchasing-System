@@ -1,0 +1,74 @@
+﻿@model IEnumerable<SistemAnalizi2.Models.urunler>
+
+@{
+    ViewBag.Title = "Ürünler";
+}
+
+<h2>Ürünler</h2>
+@if (Session["yetki"] == "yonetici")
+{
+    <p>
+        @Html.ActionLink("Ürün Ekle", "Create")
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.markalar.markaAdi)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.urunAdi)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.kategori.kategoriAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stokBilgisi.stokSayisi)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.fiyati)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.markalar.markaAdi)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.urunAdi)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.kategori.kategoriAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stokBilgisi.stokSayisi)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.fiyati) TL
+            </td>
+
+            @if (Session["yetki"] == "yonetici")
+            {
+                <td>
+                    @Html.ActionLink("Düzenle", "Edit", new { id = item.urunlerID }) |
+                    @Html.ActionLink("Göster", "Details", new { id = item.urunlerID }) |
+                    @Html.ActionLink("Sil", "Delete", new { id = item.urunlerID })
+                </td>
+            }else
+            {
+                <td>@Html.ActionLink("Sepete Ekle", "sepeteAt", new { urunID = item.urunlerID})</td>
+            }
+        </tr>
+    }
+
+</table>

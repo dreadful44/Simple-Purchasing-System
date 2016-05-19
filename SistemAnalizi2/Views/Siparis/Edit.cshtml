@@ -1,0 +1,66 @@
+﻿@model SistemAnalizi2.Models.adre
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>adre</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.adresID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.adresTipi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.adresTipi, new { htmlAttributes = new { @class = "form-control",
+               value = "test" } })
+                @Html.ValidationMessageFor(model => model.adresTipi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.adres, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.adres, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.adres, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ilceler_ilcelerID, "İl - İlçe : ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                <select name="ilceler_ilcelerID" class="form-control">
+                    @foreach (var item in ViewBag.korhan)
+                    {
+                        <option value="@item.ilcelerID">@item.iller.ilAdi - @item.ilceAdi</option>
+
+                    }
+                </select>
+
+
+
+                @Html.ValidationMessageFor(model => model.ilceler_ilcelerID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

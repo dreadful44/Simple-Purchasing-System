@@ -1,0 +1,67 @@
+﻿@model IEnumerable<SistemAnalizi2.Models.urunler>
+
+@{
+    ViewBag.Title = "Sepet";
+}
+
+<h2>Sepet</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.markalar.markaAdi)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.urunAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.kategori.kategoriAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stokBilgisi.stokSayisi)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.fiyati)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.markalar.markaAdi)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.urunAdi)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.kategori.kategoriAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.stokBilgisi.stokSayisi)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.fiyati) TL
+        </td>
+
+        <td>
+            @Html.ActionLink("Sil", "Delete", new { urunID=item.urunlerID })
+        </td>
+    </tr>
+
+
+}
+
+</table>
+<br />
+<div class="col-lg-2 col-lg-offset-10">
+
+    @Html.ActionLink("Ödeme YAP", "Index", "Siparis", null, new { @class = "btn btn-default btn-success" })
+
+
+</div>
